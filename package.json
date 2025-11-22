@@ -1,0 +1,23 @@
+{
+	"name": "sarran-contribution-forge",
+	"version": "1.0.0",
+	"description": "Sarran Contribution Form",
+	"author": "Jeremy Lardet",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/sarran/sarran-contribution-form.git"
+	},
+	"scripts": {
+		"dev": "pnpm --parallel -r dev",
+		"dev:server": "pnpm --filter server dev",
+		"dev:client": "pnpm --filter client dev",
+		"build": "pnpm -r build",
+		"build:server": "pnpm --filter server build",
+		"build:client": "pnpm --filter client build"
+	},
+	"packageManager": "pnpm@10.19.0",
+	"devDependencies": {
+		"@biomejs/biome": "^2.3.4"
+	}
+}

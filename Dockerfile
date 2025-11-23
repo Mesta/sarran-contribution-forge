@@ -23,6 +23,10 @@ FROM node:20-alpine AS runner
 
 WORKDIR /app
 
+# Copy package.json files (IMPORTANT for module resolution)
+COPY --from=builder /app/package.json /app/pnpm-workspace.yaml ./
+COPY --from=builder /app/packages/server/package.json /app/packages/server/
+
 # copy sources from builder stage
 COPY --from=builder /app/packages/server/dist /app/packages/server/dist
 COPY --from=builder /app/packages/client/dist /app/packages/server/dist/presentation/http/public
@@ -39,7 +43,7 @@ ENV HTTP_PORT=3000
 EXPOSE 3000
 
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-  CMD curl -f http://localhost:3000/health || exit 1
+  CMD wget --no-verbose --tries=1 --spider http://localhost:3000/health || exit 1
 
 # Start the server
 CMD ["node", "packages/server/dist/index.js"]

@@ -7,13 +7,14 @@ RUN corepack enable && corepack prepare pnpm@10.19.0 --activate
 
 WORKDIR /app
 
-# Copy workspace files for production dependencies
+# Copy workspace files
 COPY pnpm-workspace.yaml package.json pnpm-lock.yaml ./
 COPY packages packages
 
 # Install dependencies
 RUN pnpm install
 
+# Build packages (fresh build ensured by .dockerignore excluding build artifacts)
 RUN pnpm build
 
 ########################################################
@@ -44,9 +45,6 @@ EXPOSE 3000
 
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
   CMD wget --no-verbose --tries=1 --spider http://localhost:3000/health || exit 1
-
-# Add this line before CMD to see what files exist
-RUN ls -la /app/packages/server/dist || echo "dist directory does not exist"
 
 # Start the server
 CMD ["node", "packages/server/dist/index.js"]

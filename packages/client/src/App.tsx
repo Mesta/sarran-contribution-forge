@@ -56,7 +56,7 @@ function App() {
 	return (
 		<div className="dashboard">
 			<header className="dashboard-header">
-				<h1>⛰️ Opposition au projet de mine Pouzzolane du Sarran</h1>
+				<h1>Consultation publique - Carrière du Sarran</h1>
 				<p className="subtitle">
 					Partagez vos préoccupations concernant le projet
 				</p>
@@ -82,7 +82,7 @@ function App() {
 						<legend>
 							Motifs d'opposition
 							{selectedReasons.length > 0 && (
-								<span style={{ color: "#667eea", marginLeft: "0.5rem" }}>
+								<span style={{ color: "#2d3748", marginLeft: "0.5rem" }}>
 									({selectedReasons.length} sélectionné
 									{selectedReasons.length > 1 ? "s" : ""})
 								</span>
@@ -93,7 +93,11 @@ function App() {
 						</p>
 						<div className="checkbox-group">
 							{OPPOSITION_REASONS.map((reason) => (
-								<div key={reason.id} className="checkbox-item">
+								<div
+									key={reason.id}
+									className="checkbox-item"
+									onClick={() => handleReasonToggle(reason.id)}
+								>
 									<input
 										type="checkbox"
 										id={reason.id}
